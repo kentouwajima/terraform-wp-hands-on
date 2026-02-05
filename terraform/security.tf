@@ -50,3 +50,28 @@ resource "aws_security_group" "ec2_sg" {
     Name = "${var.project}-ec2-sg"
   }
 }
+
+# RDS用SG
+resource "aws_security_group" "rds_sg" {
+  name   = "${var.project}-rds-sg"
+  vpc_id = aws_vpc.main.id
+
+  # EC2からのMySQL通信のみを許可
+  ingress {
+    from_port       = 3306
+    to_port         = 3306
+    protocol        = "tcp"
+    security_groups = [aws_security_group.ec2_sg.id]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "${var.project}-rds-sg"
+  }
+}
