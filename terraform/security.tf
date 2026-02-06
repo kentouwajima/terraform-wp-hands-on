@@ -31,13 +31,13 @@ resource "aws_security_group" "ec2_sg" {
     security_groups = [aws_security_group.alb_sg.id]
   }
 
-  # 指定の固定IPからのSSHのみ許可
-  ingress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["118.6.173.228/32"]
-  }
+  # 指定の固定IPからのSSHのみ許可 (不要なら消してOK)
+  # ingress {
+  #   from_port   = 22
+  #   to_port     = 22
+  #   protocol    = "tcp"
+  #   cidr_blocks = ["118.6.173.228/32"]
+  # }
 
   egress {
     from_port   = 0

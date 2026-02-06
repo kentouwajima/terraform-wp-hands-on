@@ -16,6 +16,7 @@ resource "aws_instance" "app_server" {
   key_name               = "kentouwajima" # 作成済みのキーペア名
   vpc_security_group_ids = [aws_security_group.ec2_sg.id]
   subnet_id              = aws_subnet.public[0].id # 1a側のパブリックサブネット
+  iam_instance_profile   = aws_iam_instance_profile.ec2_instance_profile.name
 
   # 起動時にApacheとPHP(WordPress用)をインストール
   user_data = <<-EOF
